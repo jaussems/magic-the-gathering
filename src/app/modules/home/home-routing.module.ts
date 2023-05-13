@@ -5,7 +5,10 @@ import { CardPageComponent } from './card-page/card-page.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'card', component: CardPageComponent },
+  {
+    path: 'card/:id',
+    component: CardPageComponent,
+  },
 ];
 
 @NgModule({
