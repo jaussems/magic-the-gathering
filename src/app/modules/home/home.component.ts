@@ -7,13 +7,13 @@ import { ICardArray } from '../shared/models/interfaces.models';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   cards: ICardArray = [];
   constructor(private _ApiService: ApiService) {}
 
-  ngOnInit(): void {
-    this._ApiService.getCards().subscribe((data) => {
-      this.cards = data.cards;
-    });
-  }
+  // ngOnInit(): void {
+  //   this._ApiService.getCards().subscribe((data) => {
+  //     this.cards = data.cards;
+  //   });
+  // }
 }
