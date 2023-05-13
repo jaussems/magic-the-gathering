@@ -1,6 +1,5 @@
 <div>
     <h1>Card Page</h1>
-    <app-card name="test" manaCost="3" type="creature" text="A unknown creature"
-        imageUrl="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=130550&type=card"
-        imageAlt="A image of a human cleric"></app-card>
+    <app-card [name]="card.name" [manaCost]="card.manaCost" [type]="card.type" [text]="card.text"
+        [imageUrl]="card.imageUrl" [imageAlt]="card.name"></app-card>
 </div>
