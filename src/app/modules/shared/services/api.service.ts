@@ -1,6 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { apiUrl } from '../config/config';
+import { Observable } from 'rxjs';
+import { IGetCardsResponseObject } from '../models/interfaces.models';
+import { Crud } from '../enums/enums';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +11,7 @@ import { apiUrl } from '../config/config';
 export class ApiService {
   constructor(private _HttpClient: HttpClient) {}
 
-  async getCards() {
-    return this._HttpClient.get<JSON>(`${apiUrl}/cards`);
+  getCards(): Observable<any> {
+    return this._HttpClient.request(Crud.Get, `${apiUrl}` + 'cards');
   }
 }
