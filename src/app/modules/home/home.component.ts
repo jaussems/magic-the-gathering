@@ -8,7 +8,7 @@ import { LoaderService } from '../shared/services/loader.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   cards: ICardArray = [];
   constructor(
     private _ApiService: ApiService,
@@ -24,5 +24,9 @@ export class HomeComponent implements OnInit {
         this._loaderService.isLoading.next(false);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this._loaderService.isLoading.unsubscribe();
   }
 }
