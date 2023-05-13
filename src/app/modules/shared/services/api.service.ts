@@ -11,7 +11,10 @@ import { Crud } from '../enums/enums';
 export class ApiService {
   constructor(private _HttpClient: HttpClient) {}
 
-  getCards(): Observable<any> {
-    return this._HttpClient.request(Crud.Get, `${apiUrl}` + 'cards');
+  getCards() {
+    return this._HttpClient.request<IGetCardsResponseObject>(
+      Crud.Get,
+      `${apiUrl}` + 'cards'
+    );
   }
 }
