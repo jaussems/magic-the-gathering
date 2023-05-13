@@ -21,10 +21,10 @@ export class ApiService {
     );
   }
 
-  getSingleCard(id: string) {
+  getSingleCard(multiverseid: string) {
     return this._HttpClient.request<IGetSingleCardResponseObject>(
       Crud.Get,
-      `${apiUrl}cards/${id}`
+      `${apiUrl}cards/${multiverseid}`
     );
   }
 }

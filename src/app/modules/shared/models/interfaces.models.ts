@@ -2,6 +2,8 @@ export interface ICard {
   name: string;
   manaCost: string;
   text: string;
+  type: string;
+  imageUrl: string;
 }
 
 export interface ICardArray extends Array<ICard> {}
@@ -11,5 +13,5 @@ export interface IGetCardsResponseObject {
 }
 
 export interface IGetSingleCardResponseObject {
-  cards: ICard;
+  card: ICard;
 }
