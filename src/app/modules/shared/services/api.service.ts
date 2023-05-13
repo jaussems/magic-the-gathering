@@ -2,7 +2,10 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { apiUrl } from '../config/config';
 import { Observable } from 'rxjs';
-import { IGetCardsResponseObject } from '../models/interfaces.models';
+import {
+  IGetCardsResponseObject,
+  IGetSingleCardResponseObject,
+} from '../models/interfaces.models';
 import { Crud } from '../enums/enums';
 
 @Injectable({
@@ -15,6 +18,13 @@ export class ApiService {
     return this._HttpClient.request<IGetCardsResponseObject>(
       Crud.Get,
       `${apiUrl}` + 'cards'
+    );
+  }
+
+  getSingleCard(id: string) {
+    return this._HttpClient.request<IGetSingleCardResponseObject>(
+      Crud.Get,
+      `${apiUrl}cards/${id}`
     );
   }
 }
