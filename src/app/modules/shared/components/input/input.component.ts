@@ -8,7 +8,7 @@ import { FormControl } from '@angular/forms';
 })
 export class InputComponent {
   @Input() label?: string;
-  @Input() placeholder?: string;
+  @Input() placeholder?: string = '';
   @Input() isFocused?: boolean;
   @Input() control!: FormControl;
 }

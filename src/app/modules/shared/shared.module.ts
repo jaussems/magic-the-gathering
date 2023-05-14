@@ -7,8 +7,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputComponent } from './components/input/input.component';
 
 @NgModule({
-  declarations: [CardComponent, SpinnerComponent, InputSelectComponent, InputComponent],
+  declarations: [
+    CardComponent,
+    SpinnerComponent,
+    InputSelectComponent,
+    InputComponent,
+  ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  exports: [CardComponent, SpinnerComponent, InputSelectComponent],
+  exports: [
+    CardComponent,
+    SpinnerComponent,
+    InputSelectComponent,
+    InputComponent,
+  ],
 })
 export class SharedModule {}

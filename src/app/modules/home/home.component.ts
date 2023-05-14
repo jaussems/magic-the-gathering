@@ -18,10 +18,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   manaSelectOptions = manaSelectOptions;
   dummyCards = dummyCardArray;
   defaultValue = dummyCardArray;
+
+  searchFormGroup: FormGroup = new FormGroup({
+    search: new FormControl(''),
+  });
+
   selectFormGroup: FormGroup = new FormGroup({
     select: new FormControl([]),
     mana: new FormControl([]),
   });
+
+  get searchControl() {
+    return this.searchFormGroup.controls['search'] as FormControl;
+  }
 
   get selectControl() {
     return this.selectFormGroup.controls['select'] as FormControl;
@@ -93,5 +102,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   resetArray() {
     this.dummyCards = this.defaultValue;
+  }
+
+  search(event: any) {
+    this.dummyCards = this.defaultValue.filter((cards) =>
+      cards.name.toLowerCase().includes(event.target.value.toLowerCase())
+    );
+    if (!event.target.value) {
+      this.resetArray();
+    }
   }
 }
