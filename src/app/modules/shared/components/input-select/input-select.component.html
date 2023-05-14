@@ -1,4 +1,4 @@
-<select class="form-control" [(ngModel)]="selectedAlgorithm">
+<select class="input-select" [formControl]="control">
     <option value="">Please choose a option</option>
     <option *ngFor="let option of options"></option>
 </select>

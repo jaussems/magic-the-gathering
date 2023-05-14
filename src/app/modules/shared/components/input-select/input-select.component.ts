@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ISelectOption } from '../../models/components.models';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-input-select',
@@ -8,4 +9,5 @@ import { ISelectOption } from '../../models/components.models';
 })
 export class InputSelectComponent {
   @Input() options?: Array<ISelectOption>;
+  @Input() control!: FormControl;
 }
