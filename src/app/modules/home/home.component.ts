@@ -3,11 +3,7 @@ import { ApiService } from '../shared/services/api.service';
 import { ICardArray } from '../shared/models/interfaces.models';
 import { LoaderService } from '../shared/services/loader.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import {
-  IArrayOptions,
-  ISelectOption,
-} from '../shared/models/components.models';
-import { selectOptions } from './home.config';
+import { manaSelectOptions, selectOptions } from './home.config';
 import { dummyCardArray } from '../shared/models/data.models';
 
 @Component({
@@ -18,6 +14,7 @@ import { dummyCardArray } from '../shared/models/data.models';
 export class HomeComponent implements OnInit, OnDestroy {
   cards: ICardArray = [];
   selectOptions = selectOptions;
+  manaSelectOptions = manaSelectOptions;
   dummyCards = dummyCardArray;
   defaultValue = dummyCardArray;
   selectFormGroup: FormGroup = new FormGroup({
@@ -27,6 +24,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   get selectControl() {
     return this.selectFormGroup.controls['select'] as FormControl;
+  }
+
+  get manaSelectControl() {
+    return this.selectFormGroup.controls['mana'] as FormControl;
   }
   constructor(
     private _ApiService: ApiService,
@@ -44,9 +45,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     // });
 
     this.selectFormGroup.controls['select'].valueChanges.subscribe((value) => {
-      console.log(value);
       this.resetArray();
       this.filterByOption(value);
+    });
+
+    this.selectFormGroup.controls['mana'].valueChanges.subscribe((value) => {
+      this.resetArray();
+      this.filterByMana(value);
     });
   }
 
@@ -60,14 +65,25 @@ export class HomeComponent implements OnInit, OnDestroy {
         .sort((a, b) => a.name.localeCompare(b.name))
         .filter((cards) => cards.name);
     }
-    if (option === 'mana') {
-    }
     if (option === 'commander') {
     }
 
     if (option === 'type') {
       this.dummyCards = this.dummyCards.filter(
         (cards) => cards.type === 'Instant'
+      );
+    }
+  }
+
+  filterByMana(value: string) {
+    if (value === 'W') {
+      this.dummyCards = this.dummyCards.filter((cards) =>
+        cards.colorIdentity.includes('W')
+      );
+    }
+    if (value === 'U') {
+      this.dummyCards = this.dummyCards.filter((cards) =>
+        cards.colorIdentity.includes('U')
       );
     }
   }
