@@ -65,9 +65,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         .sort((a, b) => a.name.localeCompare(b.name))
         .filter((cards) => cards.name);
     }
-    if (option === 'commander') {
-    }
-
     if (option === 'type') {
       this.dummyCards = this.dummyCards.filter(
         (cards) => cards.type === 'Instant'
