@@ -6,13 +6,13 @@ export enum Crud {
   Delete = 'Delete',
 }
 
-export enum Option {
+export enum FilterOptions {
   Name = 'name',
   Type = 'type',
   Mana = 'mana',
 }
 
-export enum Card {
+export enum CardType {
   Instant = 'Instant',
   Spell = 'Spell',
   Creature = 'Creature',

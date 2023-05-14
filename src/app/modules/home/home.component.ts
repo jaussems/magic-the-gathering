@@ -5,6 +5,7 @@ import { LoaderService } from '../shared/services/loader.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { manaSelectOptions, selectOptions } from './home.config';
 import { dummyCardArray } from '../shared/models/data.models';
+import { CardType, FilterOptions, Mana } from '../shared/enums/enums';
 
 @Component({
   selector: 'app-home',
@@ -60,27 +61,27 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   filterByOption(option: string) {
-    if (option === 'name') {
+    if (option === FilterOptions.Name) {
       this.dummyCards = this.dummyCards
         .sort((a, b) => a.name.localeCompare(b.name))
         .filter((cards) => cards.name);
     }
-    if (option === 'type') {
+    if (option === FilterOptions.Type) {
       this.dummyCards = this.dummyCards.filter(
-        (cards) => cards.type === 'Instant'
+        (cards) => cards.type === CardType.Instant
       );
     }
   }
 
   filterByMana(value: string) {
-    if (value === 'W') {
+    if (value === Mana.White) {
       this.dummyCards = this.dummyCards.filter((cards) =>
-        cards.colorIdentity.includes('W')
+        cards.colorIdentity.includes(Mana.White)
       );
     }
-    if (value === 'U') {
+    if (value === Mana.Blue) {
       this.dummyCards = this.dummyCards.filter((cards) =>
-        cards.colorIdentity.includes('U')
+        cards.colorIdentity.includes(Mana.Blue)
       );
     }
   }
