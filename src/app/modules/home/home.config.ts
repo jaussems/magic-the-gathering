@@ -1,8 +1,7 @@
 export const selectOptions = [
-  { label: 'Name', value: 'name' },
+  { label: 'Name Ascending', value: 'nameasc' },
+  { label: 'Name Descending', value: 'namedesc' },
   { label: 'Type', value: 'type' },
-  { label: 'Color of Mana', value: 'mana' },
-  { label: 'Commander Deck', value: 'commanderdeck' },
 ];
 
 export const manaSelectOptions = [

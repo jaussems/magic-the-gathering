@@ -61,7 +61,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   filterByOption(option: string) {
-    if (option === FilterOptions.Name) {
+    if (option === FilterOptions.NameASC) {
+      this.dummyCards = this.dummyCards
+        .sort((a, b) => b.name.localeCompare(a.name))
+        .filter((cards) => cards.name);
+    }
+    if (option === FilterOptions.NameDESC) {
       this.dummyCards = this.dummyCards
         .sort((a, b) => a.name.localeCompare(b.name))
         .filter((cards) => cards.name);
