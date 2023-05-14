@@ -1,7 +1,10 @@
 <div>
     <h1>Home Page</h1>
+    <app-input-select label="Sort by" [options]="selectOptions" [control]="selectControl"></app-input-select>
+    <app-input-select label="Sort by mana" [options]="manaSelectOptions"
+        [control]="manaSelectControl"></app-input-select>
     <div class="card-list">
-        <ng-container *ngFor="let card of cards">
+        <ng-container *ngFor="let card of dummyCards">
             <app-card name="{{card.name}}" manaCost="{{card.manaCost}}" type="{{card.type}}" text="{{card.text}}"
                 imageUrl="{{card.imageUrl}}" imageAlt="{{card.name}}"></app-card>
         </ng-container>
