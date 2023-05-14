@@ -8,6 +8,7 @@ import {
   ISelectOption,
 } from '../shared/models/components.models';
 import { selectOptions } from './home.config';
+import { dummyCardArray } from '../shared/models/data.models';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,7 @@ import { selectOptions } from './home.config';
 export class HomeComponent implements OnInit, OnDestroy {
   cards: ICardArray = [];
   selectOptions = selectOptions;
-
+  dummyCards = dummyCardArray;
   selectFormGroup: FormGroup = new FormGroup({
     select: new FormControl([]),
   });
@@ -42,10 +43,21 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.selectFormGroup.controls['select'].valueChanges.subscribe((value) => {
       console.log(value);
+      this.filterByOption(value);
     });
   }
 
   ngOnDestroy(): void {
     this._loaderService.isLoading.unsubscribe();
+  }
+
+  filterByOption(option: string) {
+    if (option === 'name') {
+      this.dummyCards.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    if (option === 'mana') {
+    }
+    if (option === 'commander') {
+    }
   }
 }
