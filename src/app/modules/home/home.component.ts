@@ -7,6 +7,7 @@ import {
   IArrayOptions,
   ISelectOption,
 } from '../shared/models/components.models';
+import { selectOptions } from './home.config';
 
 @Component({
   selector: 'app-home',
@@ -15,8 +16,8 @@ import {
 })
 export class HomeComponent implements OnInit, OnDestroy {
   cards: ICardArray = [];
+  selectOptions = selectOptions;
 
-  options = [{ label: 'option one', value: 'value1' }];
   selectFormGroup: FormGroup = new FormGroup({
     select: new FormControl([]),
   });
