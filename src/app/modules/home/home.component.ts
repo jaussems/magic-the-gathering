@@ -19,8 +19,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   cards: ICardArray = [];
   selectOptions = selectOptions;
   dummyCards = dummyCardArray;
+  defaultValue = dummyCardArray;
   selectFormGroup: FormGroup = new FormGroup({
     select: new FormControl([]),
+    mana: new FormControl([]),
   });
 
   get selectControl() {
@@ -43,6 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.selectFormGroup.controls['select'].valueChanges.subscribe((value) => {
       console.log(value);
+      this.resetArray();
       this.filterByOption(value);
     });
   }
@@ -53,11 +56,23 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   filterByOption(option: string) {
     if (option === 'name') {
-      this.dummyCards.sort((a, b) => a.name.localeCompare(b.name));
+      this.dummyCards = this.dummyCards
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .filter((cards) => cards.name);
     }
     if (option === 'mana') {
     }
     if (option === 'commander') {
     }
+
+    if (option === 'type') {
+      this.dummyCards = this.dummyCards.filter(
+        (cards) => cards.type === 'Instant'
+      );
+    }
+  }
+
+  resetArray() {
+    this.dummyCards = this.defaultValue;
   }
 }
