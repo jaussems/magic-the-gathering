@@ -1,7 +1,7 @@
 <div>
     <h1>Card Page</h1>
-    <div>
+    <ng-container *ngIf="card.name">
         <app-card [name]="card.name" [manaCost]="card.manaCost" [type]="card.type" [text]="card.text"
             [imageUrl]="card.imageUrl" [imageAlt]="card.name"></app-card>
-    </div>
+    </ng-container>
 </div>
