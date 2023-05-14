@@ -1,0 +1,18 @@
+.card {
+  width: 17.5rem;
+  border: 1px solid black;
+  flex-direction: column;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 1.5rem;
+  box-shadow: 0 3px 10px 2px #444;
+
+  &_text {
+    text-align: left;
+  }
+}
+
+img {
+  margin: auto;
+  display: block;
+}
