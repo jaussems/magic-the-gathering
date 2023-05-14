@@ -1,4 +1,7 @@
-<select class="input-select" [formControl]="control">
-    <option value="">Please choose a option</option>
-    <option *ngFor="let option of options" label="{{option.label}}" value="{{option.value}}"></option>
-</select>
+<div class="select">
+    <label>{{label}}</label>
+    <select class="input-select" [formControl]="control">
+        <option value="">Please choose a option</option>
+        <option *ngFor="let option of options" label="{{option.label}}" value="{{option.value}}"></option>
+    </select>
+</div>

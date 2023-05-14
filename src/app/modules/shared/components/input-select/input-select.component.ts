@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./input-select.component.scss'],
 })
 export class InputSelectComponent {
+  @Input() label: string = '';
   @Input() options?: Array<ISelectOption>;
   @Input() control!: FormControl;
 }
