@@ -1,5 +1,7 @@
 <div class="card">
-    <h1>{{name}}</h1>
+    <a class="card_nav" [routerLink]="['/card', multiVerseId]">
+        <h1>{{name}}</h1>
+    </a>
     <img [src]="imageUrl" />
     <h3>{{manaCost}}</h3>
     <p>{{type}}</p>

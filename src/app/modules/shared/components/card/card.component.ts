@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./card.component.scss'],
 })
 export class CardComponent {
+  @Input() multiVerseId?: string = '';
   @Input() name: string = '';
   @Input() imageUrl? = '';
   @Input() imageAlt = '';

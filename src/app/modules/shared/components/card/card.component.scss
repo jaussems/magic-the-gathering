@@ -11,6 +11,14 @@
   &_text {
     text-align: left;
   }
+
+  &_nav {
+    text-decoration: none;
+    color: black;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 img {

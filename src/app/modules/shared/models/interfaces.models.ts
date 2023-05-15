@@ -5,6 +5,7 @@ export interface ICard {
   type: string;
   imageUrl: string;
   colorIdentity: Array<string>;
+  multiverseid?: string;
 }
 
 export interface ICardArray extends Array<ICard> {}
