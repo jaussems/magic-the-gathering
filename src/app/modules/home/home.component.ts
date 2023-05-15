@@ -1,16 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../shared/services/api.service';
-import {
-  ICard,
-  ICardArray,
-  IGetCardsResponseObject,
-} from '../shared/models/interfaces.models';
+import { ICard, ICardArray } from '../shared/models/interfaces.models';
 import { LoaderService } from '../shared/services/loader.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { manaSelectOptions, selectOptions } from './home.config';
 import { dummyCardArray } from '../shared/models/data.models';
 import { CardType, FilterOptions, Mana } from '../shared/enums/enums';
-import { catchError, filter, finalize, tap } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +17,7 @@ export class HomeComponent implements OnInit {
   selectOptions = selectOptions;
   manaSelectOptions = manaSelectOptions;
   dummyCards = dummyCardArray;
-  defaultValue = dummyCardArray;
+  defaultValue: ICardArray = [];
 
   searchFormGroup: FormGroup = new FormGroup({
     search: new FormControl(''),
@@ -55,6 +50,7 @@ export class HomeComponent implements OnInit {
     this._apiService.getCards().subscribe({
       next: (response) => {
         this.cards = this.removeDuplicates(response.cards);
+        this.defaultValue = [...this.cards];
       },
       error: (error) => {
         alert('There was an error in retrieving data from the server');
@@ -80,17 +76,17 @@ export class HomeComponent implements OnInit {
 
   filterByOption(option: string) {
     if (option === FilterOptions.NameASC) {
-      this.dummyCards = this.dummyCards
+      this.cards = this.cards
         .sort((a, b) => b.name.localeCompare(a.name))
         .filter((cards) => cards.name);
     }
     if (option === FilterOptions.NameDESC) {
-      this.dummyCards = this.dummyCards
+      this.cards = this.cards
         .sort((a, b) => a.name.localeCompare(b.name))
         .filter((cards) => cards.name);
     }
     if (option === FilterOptions.Type) {
-      this.dummyCards = this.dummyCards.filter(
+      this.cards = this.cards.filter(
         (cards) => cards.type === CardType.Instant
       );
     }
@@ -98,23 +94,23 @@ export class HomeComponent implements OnInit {
 
   filterByMana(value: string) {
     if (value === Mana.White) {
-      this.dummyCards = this.dummyCards.filter((cards) =>
-        cards.colorIdentity.includes(Mana.White)
+      this.cards = this.cards.filter((card) =>
+        card.colorIdentity.includes(Mana.White)
       );
     }
     if (value === Mana.Blue) {
-      this.dummyCards = this.dummyCards.filter((cards) =>
-        cards.colorIdentity.includes(Mana.Blue)
+      this.cards = this.cards.filter((card) =>
+        card.colorIdentity.includes(Mana.Blue)
       );
     }
   }
 
   resetArray() {
-    this.dummyCards = this.defaultValue;
+    this.cards = this.defaultValue;
   }
 
   search(event: any) {
-    this.dummyCards = this.defaultValue.filter((cards) =>
+    this.cards = this.defaultValue.filter((cards) =>
       cards.name.toLowerCase().includes(event.target.value.toLowerCase())
     );
     if (!event.target.value) {
