@@ -5,15 +5,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LoaderService {
-  isLoading = new BehaviorSubject(false);
+  isLoading$ = new BehaviorSubject(false);
 
   constructor() {}
 
   setLoading(loading: boolean) {
-    this.isLoading.next(loading);
+    this.isLoading$.next(loading);
   }
 
   getLoading(): boolean {
-    return this.isLoading.value;
+    return this.isLoading$.value;
   }
 }

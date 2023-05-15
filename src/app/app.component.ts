@@ -10,12 +10,12 @@ export class AppComponent implements OnDestroy {
   title = 'magic-the-gathering';
   loading = false;
   constructor(private _loaderService: LoaderService) {
-    this._loaderService.isLoading.subscribe((value) => {
+    this._loaderService.isLoading$.subscribe((value) => {
       this.loading = value;
     });
   }
 
   ngOnDestroy(): void {
-    this._loaderService.isLoading.unsubscribe();
+    this._loaderService.isLoading$.unsubscribe();
   }
 }
