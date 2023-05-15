@@ -8,7 +8,7 @@ export enum Crud {
 
 export enum FilterOptions {
   NameASC = 'nameasc',
-  NameDESC = 'nameasc',
+  NameDESC = 'namedesc',
   Type = 'type',
   Mana = 'mana',
 }

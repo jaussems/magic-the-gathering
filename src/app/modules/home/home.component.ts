@@ -86,20 +86,26 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   filterByOption(option: string) {
-    if (option === FilterOptions.NameASC) {
-      this.cards = this.cards
-        .sort((a, b) => b.name.localeCompare(a.name))
-        .filter((cards) => cards.name);
-    }
-    if (option === FilterOptions.NameDESC) {
-      this.cards = this.cards
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .filter((cards) => cards.name);
-    }
-    if (option === FilterOptions.Type) {
-      this.cards = this.cards.filter(
-        (cards) => cards.type === CardType.Instant
-      );
+    switch (option) {
+      case FilterOptions.NameASC:
+        this.cards = this.cards
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .filter((cards) => cards.name);
+        break;
+
+      case FilterOptions.NameDESC:
+        this.cards = this.cards
+          .sort((a, b) => b.name.localeCompare(a.name))
+          .filter((cards) => cards.name);
+        break;
+
+      case FilterOptions.Type:
+        this.cards = this.cards.filter(
+          (cards) => cards.type === CardType.Instant
+        );
+        break;
+      default:
+        this.cards = this.defaultValue;
     }
   }
 
