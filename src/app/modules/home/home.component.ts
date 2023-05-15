@@ -52,20 +52,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._loaderService.setLoading(false);
     this.dummyCards = this.removeDuplicates(dummyCardArray);
-    // this._apiService.getCards().subscribe({
-    //   next: (response) => {
-    //     this.cards = this.removeDuplicates(response.cards);
-    //   },
-    //   error: (error) => {
-    //     alert('There was an error in retrieving data from the server');
-    //     if (error) {
-    //       this._loaderService.setLoading(false);
-    //     }
-    //   },
-    //   complete: () => {
-    //     this._loaderService.setLoading(false);
-    //   },
-    // });
+    this._apiService.getCards().subscribe({
+      next: (response) => {
+        this.cards = this.removeDuplicates(response.cards);
+      },
+      error: (error) => {
+        alert('There was an error in retrieving data from the server');
+        if (error) {
+          this._loaderService.setLoading(false);
+        }
+      },
+      complete: () => {
+        this._loaderService.setLoading(false);
+      },
+    });
 
     this.selectFormGroup.controls['select'].valueChanges.subscribe((value) => {
       this.resetArray();
