@@ -1,10 +1,14 @@
 <div>
     <h1>Home Page</h1>
-    <app-input label="Search" placeholder="enter search text" [control]="searchControl" type="search"
-        (keyup)="search($event)"></app-input>
-    <app-input-select label="Sort by" [options]="selectOptions" [control]="selectControl"></app-input-select>
-    <app-input-select label="Sort by mana" [options]="manaSelectOptions"
-        [control]="manaSelectControl"></app-input-select>
+    <div class="select-list">
+
+
+        <app-input label="Search" placeholder="enter search text" [control]="searchControl" type="search"
+            (keyup)="search($event)"></app-input>
+        <app-input-select label="Sort by" [options]="selectOptions" [control]="selectControl"></app-input-select>
+        <app-input-select label="Sort by mana" [options]="manaSelectOptions"
+            [control]="manaSelectControl"></app-input-select>
+    </div>
     <div class="card-list">
         <ng-container *ngFor="let card of cards">
             <app-card multiVerseId="{{card.multiverseid}}" name="{{card.name}}" manaCost="{{card.manaCost}}"

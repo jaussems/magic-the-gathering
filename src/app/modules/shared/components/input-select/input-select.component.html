@@ -1,7 +1,9 @@
 <div class="select">
     <label>{{label}}</label>
-    <select class="input-select" [formControl]="control">
-        <option value="" disabled>Please choose a option</option>
-        <option *ngFor="let option of options" label="{{option.label}}" value="{{option.value}}"></option>
-    </select>
+    <div class="select_container">
+        <select class="input-select" [formControl]="control">
+            <option value="" disabled>Please choose a option</option>
+            <option *ngFor="let option of options" label="{{option.label}}" value="{{option.value}}"></option>
+        </select>
+    </div>
 </div>

@@ -1,3 +1,5 @@
+@use "../../../scss/helpers/mixins" as *;
+
 .card-list {
   display: flex;
   flex-direction: row;
@@ -5,6 +7,12 @@
   justify-content: center;
   gap: 2rem;
   margin-top: 1rem;
+}
+
+.select-list {
+  @include flex-row;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .flex {
