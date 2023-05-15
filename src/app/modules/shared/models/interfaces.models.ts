@@ -4,6 +4,7 @@ export interface ICard {
   text: string;
   type: string;
   imageUrl: string;
+  colorIdentity: Array<string>;
 }
 
 export interface ICardArray extends Array<ICard> {}

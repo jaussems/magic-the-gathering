@@ -15,7 +15,7 @@ export class CardPageComponent implements OnInit {
     private _apiService: ApiService,
     private _loaderService: LoaderService
   ) {
-    this._loaderService.isLoading.next(true);
+    this._loaderService.isLoading$.next(true);
   }
   card: ICard = {} as ICard;
   ngOnInit() {
