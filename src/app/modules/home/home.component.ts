@@ -1,12 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../shared/services/api.service';
-import { ICardArray } from '../shared/models/interfaces.models';
+import {
+  ICardArray,
+  IGetCardsResponseObject,
+} from '../shared/models/interfaces.models';
 import { LoaderService } from '../shared/services/loader.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { manaSelectOptions, selectOptions } from './home.config';
 import { dummyCardArray } from '../shared/models/data.models';
 import { CardType, FilterOptions, Mana } from '../shared/enums/enums';
-import { finalize } from 'rxjs';
+import { catchError, finalize, tap } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -47,24 +50,22 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._loaderService.isLoading.next(true);
-    this._apiService
-      .getCards()
-      .subscribe(
-        (response) => {
-          this.cards = response.cards;
-        },
-        (error: any) => {
-          if (error) {
-            console.log(`ERROR: ${error}`);
-            this._loaderService.setLoading(false);
-          }
-        }
-      )
-      .add(() => {
-        if (this.cards) {
+
+    this._apiService.getCards().subscribe({
+      next: (response) => {
+        this.cards = response.cards;
+      },
+      error: (error) => {
+        alert('There was an error in retrieving data from the server');
+        if (error) {
           this._loaderService.setLoading(false);
         }
-      });
+      },
+      complete: () => {
+        this._loaderService.setLoading(false);
+      },
+    });
+
     this.selectFormGroup.controls['select'].valueChanges.subscribe((value) => {
       this.resetArray();
       this.filterByOption(value);
