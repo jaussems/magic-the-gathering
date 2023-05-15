@@ -52,9 +52,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this._loaderService.setLoading(false);
-    this.cards = this.removeDuplicates(dummyCardArray as ICardArray);
-    //this.getData();
+    this._loaderService.setLoading(true);
+    //dummyData in case API call breaks
+    //this.cards = this.removeDuplicates(dummyCardArray as ICardArray);
+    this.getData();
     this.subscription.add(
       this.selectFormGroup.controls['select'].valueChanges.subscribe(
         (value) => {
@@ -114,15 +115,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   filterByMana(value: string) {
-    if (value === Mana.White) {
-      this.cards = this.cards.filter((card) =>
-        card.colorIdentity.includes(Mana.White)
-      );
-    }
-    if (value === Mana.Blue) {
-      this.cards = this.cards.filter((card) =>
-        card.colorIdentity.includes(Mana.Blue)
-      );
+    switch (value) {
+      case Mana.White:
+        this.cards = this.cards.filter((card) =>
+          card.colorIdentity.includes(Mana.White)
+        );
+        break;
+      case Mana.Blue:
+        this.cards = this.cards.filter((card) =>
+          card.colorIdentity.includes(Mana.Blue)
+        );
+        break;
+      default:
+        this.cards = this.defaultValue;
     }
   }
 
