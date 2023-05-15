@@ -1,23 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../shared/services/api.service';
-import { ICard, ICardArray } from '../shared/models/interfaces.models';
+import {
+  ICard,
+  ICardArray,
+  IGetCardsResponseObject,
+} from '../shared/models/interfaces.models';
 import { LoaderService } from '../shared/services/loader.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { manaSelectOptions, selectOptions } from './home.config';
 import { dummyCardArray } from '../shared/models/data.models';
 import { CardType, FilterOptions, Mana } from '../shared/enums/enums';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   cards: ICardArray = [];
   selectOptions = selectOptions;
   manaSelectOptions = manaSelectOptions;
   dummyCards = dummyCardArray;
   defaultValue: ICardArray = [];
+  private readonly subscription = new Subscription();
 
   searchFormGroup: FormGroup = new FormGroup({
     search: new FormControl(''),
@@ -28,6 +34,7 @@ export class HomeComponent implements OnInit {
     mana: new FormControl([]),
   });
 
+  //getters
   get searchControl() {
     return this.searchFormGroup.controls['search'] as FormControl;
   }
@@ -46,7 +53,26 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this._loaderService.setLoading(true);
-    this.dummyCards = this.removeDuplicates(dummyCardArray);
+    //dummyData in case API call breaks
+    //this.cards = this.removeDuplicates(dummyCardArray as ICardArray);
+    this.getData();
+    this.subscription.add(
+      this.selectFormGroup.controls['select'].valueChanges.subscribe(
+        (value) => {
+          this.resetArray();
+          this.filterByOption(value);
+        }
+      )
+    );
+    this.subscription.add(
+      this.selectFormGroup.controls['mana'].valueChanges.subscribe((value) => {
+        this.resetArray();
+        this.filterByMana(value);
+      })
+    );
+  }
+
+  getData() {
     this._apiService.getCards().subscribe({
       next: (response) => {
         this.cards = this.removeDuplicates(response.cards);
@@ -62,46 +88,46 @@ export class HomeComponent implements OnInit {
         this._loaderService.setLoading(false);
       },
     });
-
-    this.selectFormGroup.controls['select'].valueChanges.subscribe((value) => {
-      this.resetArray();
-      this.filterByOption(value);
-    });
-
-    this.selectFormGroup.controls['mana'].valueChanges.subscribe((value) => {
-      this.resetArray();
-      this.filterByMana(value);
-    });
   }
 
   filterByOption(option: string) {
-    if (option === FilterOptions.NameASC) {
-      this.cards = this.cards
-        .sort((a, b) => b.name.localeCompare(a.name))
-        .filter((cards) => cards.name);
-    }
-    if (option === FilterOptions.NameDESC) {
-      this.cards = this.cards
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .filter((cards) => cards.name);
-    }
-    if (option === FilterOptions.Type) {
-      this.cards = this.cards.filter(
-        (cards) => cards.type === CardType.Instant
-      );
+    switch (option) {
+      case FilterOptions.NameASC:
+        this.cards = this.cards
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .filter((cards) => cards.name);
+        break;
+
+      case FilterOptions.NameDESC:
+        this.cards = this.cards
+          .sort((a, b) => b.name.localeCompare(a.name))
+          .filter((cards) => cards.name);
+        break;
+
+      case FilterOptions.Type:
+        this.cards = this.cards.filter(
+          (cards) => cards.type === CardType.Instant
+        );
+        break;
+      default:
+        this.cards = this.defaultValue;
     }
   }
 
   filterByMana(value: string) {
-    if (value === Mana.White) {
-      this.cards = this.cards.filter((card) =>
-        card.colorIdentity.includes(Mana.White)
-      );
-    }
-    if (value === Mana.Blue) {
-      this.cards = this.cards.filter((card) =>
-        card.colorIdentity.includes(Mana.Blue)
-      );
+    switch (value) {
+      case Mana.White:
+        this.cards = this.cards.filter((card) =>
+          card.colorIdentity.includes(Mana.White)
+        );
+        break;
+      case Mana.Blue:
+        this.cards = this.cards.filter((card) =>
+          card.colorIdentity.includes(Mana.Blue)
+        );
+        break;
+      default:
+        this.cards = this.defaultValue;
     }
   }
 
@@ -117,11 +143,15 @@ export class HomeComponent implements OnInit {
       this.resetArray();
     }
   }
-  removeDuplicates(arr: any) {
+  removeDuplicates(arr: ICardArray) {
     const filtered = arr.filter((card: ICard) => {
       return card.imageUrl !== undefined;
     });
 
     return filtered;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
