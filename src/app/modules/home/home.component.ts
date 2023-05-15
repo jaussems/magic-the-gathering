@@ -1,6 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../shared/services/api.service';
-import { ICard, ICardArray } from '../shared/models/interfaces.models';
+import {
+  ICard,
+  ICardArray,
+  IGetCardsResponseObject,
+} from '../shared/models/interfaces.models';
 import { LoaderService } from '../shared/services/loader.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { manaSelectOptions, selectOptions } from './home.config';
@@ -48,9 +52,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this._loaderService.setLoading(true);
-    this.dummyCards = this.removeDuplicates(dummyCardArray);
-    this.getData();
+    this._loaderService.setLoading(false);
+    this.cards = this.removeDuplicates(dummyCardArray as ICardArray);
+    //this.getData();
     this.subscription.add(
       this.selectFormGroup.controls['select'].valueChanges.subscribe(
         (value) => {
@@ -134,7 +138,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.resetArray();
     }
   }
-  removeDuplicates(arr: any) {
+  removeDuplicates(arr: ICardArray) {
     const filtered = arr.filter((card: ICard) => {
       return card.imageUrl !== undefined;
     });

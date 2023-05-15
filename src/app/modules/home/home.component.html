@@ -8,7 +8,7 @@
     <div class="card-list">
         <ng-container *ngFor="let card of cards">
             <app-card name="{{card.name}}" manaCost="{{card.manaCost}}" type="{{card.type}}" text="{{card.text}}"
-                imageUrl="{{card.imageUrl}}" imageAlt="{{card.name}}"></app-card>
+                imageUrl="{{card.imageUrl}}" imageAlt="{{card.name}}" [ngClass]="{'flex': true}"></app-card>
         </ng-container>
     </div>
 </div>
