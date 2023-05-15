@@ -1,11 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../shared/services/api.service';
-import { ICardArray } from '../shared/models/interfaces.models';
+import {
+  ICard,
+  ICardArray,
+  IGetCardsResponseObject,
+} from '../shared/models/interfaces.models';
 import { LoaderService } from '../shared/services/loader.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { manaSelectOptions, selectOptions } from './home.config';
 import { dummyCardArray } from '../shared/models/data.models';
 import { CardType, FilterOptions, Mana } from '../shared/enums/enums';
+import { catchError, filter, finalize, tap } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -40,19 +45,27 @@ export class HomeComponent implements OnInit, OnDestroy {
     return this.selectFormGroup.controls['mana'] as FormControl;
   }
   constructor(
-    private _ApiService: ApiService,
+    private _apiService: ApiService,
     private _loaderService: LoaderService
-  ) {
-    this._loaderService.isLoading.next(false);
-  }
+  ) {}
 
   ngOnInit(): void {
-    // this._ApiService.getCards().subscribe((data) => {
-    //   this.cards = data.cards;
-    //   if (this.cards) {
-    //     this._loaderService.isLoading.next(false);
-    //   }
-    // });
+    this._loaderService.setLoading(false);
+    this.dummyCards = this.removeDuplicates(dummyCardArray);
+    this._apiService.getCards().subscribe({
+      next: (response) => {
+        this.cards = this.removeDuplicates(response.cards);
+      },
+      error: (error) => {
+        alert('There was an error in retrieving data from the server');
+        if (error) {
+          this._loaderService.setLoading(false);
+        }
+      },
+      complete: () => {
+        this._loaderService.setLoading(false);
+      },
+    });
 
     this.selectFormGroup.controls['select'].valueChanges.subscribe((value) => {
       this.resetArray();
@@ -111,5 +124,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (!event.target.value) {
       this.resetArray();
     }
+  }
+  removeDuplicates(arr: any) {
+    const filtered = arr.filter((card: ICard) => {
+      return card.imageUrl !== undefined;
+    });
+
+    return filtered;
   }
 }

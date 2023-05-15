@@ -22,11 +22,19 @@ export class CardPageComponent implements OnInit, OnDestroy {
     const cardId = this.route.snapshot.paramMap.get('id');
     //test ID: 386616
     if (cardId) {
-      this._apiService.getSingleCard(cardId).subscribe((data) => {
-        this.card = data.card;
-        if (this.card) {
-          this._loaderService.isLoading.next(false);
-        }
+      this._apiService.getSingleCard(cardId).subscribe({
+        next: (response) => {
+          this.card = response.card;
+        },
+        error: (error) => {
+          alert('There was an error in retrieving data from the server');
+          if (error) {
+            this._loaderService.setLoading(false);
+          }
+        },
+        complete: () => {
+          this._loaderService.setLoading(false);
+        },
       });
     }
   }
