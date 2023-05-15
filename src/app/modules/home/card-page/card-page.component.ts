@@ -9,7 +9,7 @@ import { LoaderService } from '../../shared/services/loader.service';
   templateUrl: './card-page.component.html',
   styleUrls: ['./card-page.component.scss'],
 })
-export class CardPageComponent implements OnInit, OnDestroy {
+export class CardPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private _apiService: ApiService,
@@ -37,9 +37,5 @@ export class CardPageComponent implements OnInit, OnDestroy {
         },
       });
     }
-  }
-
-  ngOnDestroy(): void {
-    this._loaderService.isLoading.unsubscribe();
   }
 }
