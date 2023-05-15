@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this._loaderService.isLoading.next(true);
+    this._loaderService.setLoading(true);
 
     this._apiService.getCards().subscribe({
       next: (response) => {
