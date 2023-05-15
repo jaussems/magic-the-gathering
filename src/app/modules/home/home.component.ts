@@ -17,7 +17,7 @@ import { catchError, filter, finalize, tap } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
   cards: ICardArray = [];
   selectOptions = selectOptions;
   manaSelectOptions = manaSelectOptions;
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this._loaderService.setLoading(false);
+    this._loaderService.setLoading(true);
     this.dummyCards = this.removeDuplicates(dummyCardArray);
     this._apiService.getCards().subscribe({
       next: (response) => {
@@ -76,10 +76,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.resetArray();
       this.filterByMana(value);
     });
-  }
-
-  ngOnDestroy(): void {
-    this._loaderService.isLoading.unsubscribe();
   }
 
   filterByOption(option: string) {
