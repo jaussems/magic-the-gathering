@@ -11,7 +11,6 @@ export class AppComponent implements OnDestroy {
   loading = false;
   constructor(private _loaderService: LoaderService) {
     this._loaderService.isLoading.subscribe((value) => {
-      //console.log(value);
       this.loading = value;
     });
   }
